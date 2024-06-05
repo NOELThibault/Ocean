@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/thibault/Work/Physics/Ocean/include -I/home/thibault/Work/Physics/Ocean/include/glm
+CXX_INCLUDES = -I/home/thibault/Work/Physics/Ocean/include -I/home/thibault/Work/Physics/Ocean/include/glm -I/home/thibault/Work/Physics/Ocean/include/shader
 
 CXX_FLAGS = 
 

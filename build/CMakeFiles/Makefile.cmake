@@ -52,5 +52,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/glad.dir/DependInfo.cmake"
   "CMakeFiles/ldebug.dir/DependInfo.cmake"
+  "CMakeFiles/shader.dir/DependInfo.cmake"
+  "CMakeFiles/camera.dir/DependInfo.cmake"
   "CMakeFiles/Ocean.dir/DependInfo.cmake"
   )

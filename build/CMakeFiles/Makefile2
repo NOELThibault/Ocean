@@ -65,6 +65,8 @@ CMAKE_BINARY_DIR = /home/thibault/Work/Physics/Ocean/build
 # The main recursive "all" target.
 all: CMakeFiles/glad.dir/all
 all: CMakeFiles/ldebug.dir/all
+all: CMakeFiles/shader.dir/all
+all: CMakeFiles/camera.dir/all
 all: CMakeFiles/Ocean.dir/all
 .PHONY : all
 
@@ -75,6 +77,8 @@ preinstall:
 # The main recursive "clean" target.
 clean: CMakeFiles/glad.dir/clean
 clean: CMakeFiles/ldebug.dir/clean
+clean: CMakeFiles/shader.dir/clean
+clean: CMakeFiles/camera.dir/clean
 clean: CMakeFiles/Ocean.dir/clean
 .PHONY : clean
 
@@ -85,7 +89,7 @@ clean: CMakeFiles/Ocean.dir/clean
 CMakeFiles/glad.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/glad.dir/build.make CMakeFiles/glad.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/glad.dir/build.make CMakeFiles/glad.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thibault/Work/Physics/Ocean/build/CMakeFiles --progress-num=3,4 "Built target glad"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thibault/Work/Physics/Ocean/build/CMakeFiles --progress-num=5,6 "Built target glad"
 .PHONY : CMakeFiles/glad.dir/all
 
 # Build rule for subdir invocation for target.
@@ -111,7 +115,7 @@ CMakeFiles/glad.dir/clean:
 CMakeFiles/ldebug.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ldebug.dir/build.make CMakeFiles/ldebug.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ldebug.dir/build.make CMakeFiles/ldebug.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thibault/Work/Physics/Ocean/build/CMakeFiles --progress-num=5,6 "Built target ldebug"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thibault/Work/Physics/Ocean/build/CMakeFiles --progress-num=7,8 "Built target ldebug"
 .PHONY : CMakeFiles/ldebug.dir/all
 
 # Build rule for subdir invocation for target.
@@ -131,11 +135,65 @@ CMakeFiles/ldebug.dir/clean:
 .PHONY : CMakeFiles/ldebug.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/shader.dir
+
+# All Build rule for target.
+CMakeFiles/shader.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader.dir/build.make CMakeFiles/shader.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader.dir/build.make CMakeFiles/shader.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thibault/Work/Physics/Ocean/build/CMakeFiles --progress-num=9,10 "Built target shader"
+.PHONY : CMakeFiles/shader.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/shader.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thibault/Work/Physics/Ocean/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/shader.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thibault/Work/Physics/Ocean/build/CMakeFiles 0
+.PHONY : CMakeFiles/shader.dir/rule
+
+# Convenience name for target.
+shader: CMakeFiles/shader.dir/rule
+.PHONY : shader
+
+# clean rule for target.
+CMakeFiles/shader.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader.dir/build.make CMakeFiles/shader.dir/clean
+.PHONY : CMakeFiles/shader.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/camera.dir
+
+# All Build rule for target.
+CMakeFiles/camera.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thibault/Work/Physics/Ocean/build/CMakeFiles --progress-num=3,4 "Built target camera"
+.PHONY : CMakeFiles/camera.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/camera.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thibault/Work/Physics/Ocean/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/camera.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thibault/Work/Physics/Ocean/build/CMakeFiles 0
+.PHONY : CMakeFiles/camera.dir/rule
+
+# Convenience name for target.
+camera: CMakeFiles/camera.dir/rule
+.PHONY : camera
+
+# clean rule for target.
+CMakeFiles/camera.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/clean
+.PHONY : CMakeFiles/camera.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/Ocean.dir
 
 # All Build rule for target.
-CMakeFiles/Ocean.dir/all: CMakeFiles/ldebug.dir/all
+CMakeFiles/Ocean.dir/all: CMakeFiles/shader.dir/all
+CMakeFiles/Ocean.dir/all: CMakeFiles/camera.dir/all
 CMakeFiles/Ocean.dir/all: CMakeFiles/glad.dir/all
+CMakeFiles/Ocean.dir/all: CMakeFiles/ldebug.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ocean.dir/build.make CMakeFiles/Ocean.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ocean.dir/build.make CMakeFiles/Ocean.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/thibault/Work/Physics/Ocean/build/CMakeFiles --progress-num=1,2 "Built target Ocean"
@@ -143,7 +201,7 @@ CMakeFiles/Ocean.dir/all: CMakeFiles/glad.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Ocean.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/thibault/Work/Physics/Ocean/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/thibault/Work/Physics/Ocean/build/CMakeFiles 10
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Ocean.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/thibault/Work/Physics/Ocean/build/CMakeFiles 0
 .PHONY : CMakeFiles/Ocean.dir/rule

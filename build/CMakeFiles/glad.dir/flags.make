@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/thibault/Work/Physics/Ocean/include -I/home/thibault/Work/Physics/Ocean/include/glm
+C_INCLUDES = -I/home/thibault/Work/Physics/Ocean/include -I/home/thibault/Work/Physics/Ocean/include/glm -I/home/thibault/Work/Physics/Ocean/include/shader
 
 C_FLAGS = 
 
