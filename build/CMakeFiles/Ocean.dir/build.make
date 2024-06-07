@@ -98,6 +98,7 @@ Ocean: libglad.a
 Ocean: libldebug.a
 Ocean: libshader.a
 Ocean: libcamera.a
+Ocean: libstbi.a
 Ocean: CMakeFiles/Ocean.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/thibault/Work/Physics/Ocean/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Ocean"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Ocean.dir/link.txt --verbose=$(VERBOSE)

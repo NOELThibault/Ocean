@@ -6,6 +6,8 @@
 #include <shader.hpp>
 #include <camera.hpp>
 #include <iostream>
+#include <vector>
+#include <stb_image.h>
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -112,21 +114,115 @@ int main()
     };
 
     // Water surface buffers
-    unsigned int VAO, VBO, EBO;
-    glGenVertexArrays( 1, &VAO );
-    glGenBuffers( 1, &VBO );
-    glGenBuffers( 1, &EBO );
-    glBindVertexArray( VAO );
-    glBindBuffer( GL_ARRAY_BUFFER, VBO );
+    unsigned int waterVAO, waterVBO, waterEBO;
+    glGenVertexArrays( 1, &waterVAO );
+    glGenBuffers( 1, &waterVBO );
+    glGenBuffers( 1, &waterEBO );
+    glBindVertexArray( waterVAO );
+    glBindBuffer( GL_ARRAY_BUFFER, waterVBO );
     glBufferData( GL_ARRAY_BUFFER, sizeof( waterSurface ), waterSurface, GL_STATIC_DRAW );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, EBO );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, waterEBO );
     glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( indices ), indices, GL_STATIC_DRAW );
 
     glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), ( void * ) 0 );
     glEnableVertexAttribArray( 0 );
 
     // Load water surface shader
-    Shader shader( "../include/shader/vertex.vs", "../include/shader/fragment.fs" );
+    Shader waterShader( "../include/shader/water.vs", "../include/shader/water.fs" );
+
+    // Skybox mesh
+    float skyboxVertices [] = {
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+
+        -1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f
+    };
+
+    // Skybox buffers
+    unsigned int skyboxVAO, skyboxVBO;
+    glGenVertexArrays( 1, &skyboxVAO );
+    glGenBuffers( 1, &skyboxVBO );
+    glBindVertexArray( skyboxVAO );
+    glBindBuffer( GL_ARRAY_BUFFER, skyboxVBO );
+    glBufferData( GL_ARRAY_BUFFER, sizeof( skyboxVertices ), &skyboxVertices, GL_STATIC_DRAW );
+    glEnableVertexAttribArray( 0 );
+    glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), ( void* )0 );
+
+    // Load skybox texture
+    std::vector<std::string> faces
+    {
+        "../include/skybox/right.jpg",
+        "../include/skybox/left.jpg",
+        "../include/skybox/top.jpg",
+        "../include/skybox/bottom.jpg",
+        "../include/skybox/front.jpg",
+        "../include/skybox/back.jpg",
+    };
+    unsigned int skyTextID;
+    glGenTextures( 1, &skyTextID );
+    glBindTexture( GL_TEXTURE_CUBE_MAP, skyTextID );
+    int width, height, nrChannels;
+    for ( int i = 0; i < faces.size(); i++ )
+    {
+        unsigned char * data = stbi_load( faces[i].c_str(), &width, &height, &nrChannels, 0 );
+        if( data )
+        {
+            glTexImage2D( GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data );
+            stbi_image_free( data );
+        }
+        else
+        {
+            std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+            stbi_image_free( data );
+        }
+    }
+    glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE );
+
+    // Load skybox shader
+    Shader skyboxShader( "../include/shader/skybox.vs", "../include/shader/skybox.fs" );
+    skyboxShader.activate();
+    skyboxShader.setInt( "skybox", 0 );
 
     while( !glfwWindowShouldClose( window ) )
     {
@@ -143,22 +239,36 @@ int main()
         float angle = -90.0f;
         model = glm::rotate( model, glm::radians( angle ), glm::vec3( 1.0f, 0.0f, 0.0f ) );
 
-        shader.activate();
-        shader.setMat4( "model", model );
-        shader.setMat4( "view", view );
-        shader.setMat4( "projection", projection );
+        waterShader.activate();
+        waterShader.setMat4( "model", model );
+        waterShader.setMat4( "view", view );
+        waterShader.setMat4( "projection", projection );
 
-        glBindVertexArray( VAO );
+        glBindVertexArray( waterVAO );
         glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
+
+        glDepthFunc( GL_LEQUAL );
+        view = glm::mat4( glm::mat3( cam.getViewMat() ) ); // remove translation from the view matrix
+        skyboxShader.activate();
+        skyboxShader.setMat4( "view", view );
+        skyboxShader.setMat4( "projection", projection );
+
+        glBindVertexArray( skyboxVAO );
+        glActiveTexture( GL_TEXTURE0 );
+        glBindTexture( GL_TEXTURE_CUBE_MAP, skyTextID );
+        glDrawArrays( GL_TRIANGLES, 0, 36 );
+        glDepthFunc( GL_LESS );
 
         glfwSwapBuffers( window );
         glfwPollEvents();
     }
 
     glCheckError();
-    glDeleteBuffers( 1, &EBO );
-    glDeleteBuffers( 1, &VBO );
-    glDeleteVertexArrays( 1, &VAO );
+    glDeleteBuffers( 1, &skyboxVBO );
+    glDeleteVertexArrays( 1, &skyboxVAO );
+    glDeleteBuffers( 1, &waterEBO );
+    glDeleteBuffers( 1, &waterVBO );
+    glDeleteVertexArrays( 1, &waterVAO );
     glfwDestroyWindow( window );
     glfwTerminate();
     return 0;

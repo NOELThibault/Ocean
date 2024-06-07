@@ -54,5 +54,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/ldebug.dir/DependInfo.cmake"
   "CMakeFiles/shader.dir/DependInfo.cmake"
   "CMakeFiles/camera.dir/DependInfo.cmake"
+  "CMakeFiles/stbi.dir/DependInfo.cmake"
   "CMakeFiles/Ocean.dir/DependInfo.cmake"
   )

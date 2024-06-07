@@ -169,6 +169,19 @@ camera/fast:
 .PHONY : camera/fast
 
 #=============================================================================
+# Target rules for targets named stbi
+
+# Build rule for target.
+stbi: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 stbi
+.PHONY : stbi
+
+# fast build rule for target.
+stbi/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stbi.dir/build.make CMakeFiles/stbi.dir/build
+.PHONY : stbi/fast
+
+#=============================================================================
 # Target rules for targets named Ocean
 
 # Build rule for target.
@@ -301,6 +314,30 @@ src/shader.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/shader.dir/build.make CMakeFiles/shader.dir/src/shader.cpp.s
 .PHONY : src/shader.cpp.s
 
+src/stb_image.o: src/stb_image.cpp.o
+.PHONY : src/stb_image.o
+
+# target to build an object file
+src/stb_image.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stbi.dir/build.make CMakeFiles/stbi.dir/src/stb_image.cpp.o
+.PHONY : src/stb_image.cpp.o
+
+src/stb_image.i: src/stb_image.cpp.i
+.PHONY : src/stb_image.i
+
+# target to preprocess a source file
+src/stb_image.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stbi.dir/build.make CMakeFiles/stbi.dir/src/stb_image.cpp.i
+.PHONY : src/stb_image.cpp.i
+
+src/stb_image.s: src/stb_image.cpp.s
+.PHONY : src/stb_image.s
+
+# target to generate assembly for a file
+src/stb_image.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stbi.dir/build.make CMakeFiles/stbi.dir/src/stb_image.cpp.s
+.PHONY : src/stb_image.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -314,6 +351,7 @@ help:
 	@echo "... glad"
 	@echo "... ldebug"
 	@echo "... shader"
+	@echo "... stbi"
 	@echo "... src/camera.o"
 	@echo "... src/camera.i"
 	@echo "... src/camera.s"
@@ -329,6 +367,9 @@ help:
 	@echo "... src/shader.o"
 	@echo "... src/shader.i"
 	@echo "... src/shader.s"
+	@echo "... src/stb_image.o"
+	@echo "... src/stb_image.i"
+	@echo "... src/stb_image.s"
 .PHONY : help
 
 

@@ -10,10 +10,11 @@ add_library(glad src/glad.c)
 add_library(ldebug src/debug.cpp)
 add_library(shader src/shader.cpp)
 add_library(camera src/camera.cpp)
+add_library(stbi src/stb_image.cpp)
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 
 add_executable(Ocean src/main.cpp)
 
-target_link_libraries(Ocean PRIVATE OpenGL::GL glfw glad ldebug shader camera)
+target_link_libraries(Ocean PRIVATE OpenGL::GL glfw glad ldebug shader camera stbi)
