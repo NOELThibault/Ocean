@@ -7,10 +7,9 @@
 class Shader
 {
     public :
-        Shader( const char * vertexPath, const char * fragmentPath );
+        Shader( const char * vertexPath, const char * fragmentPath, const char * geometryPath = nullptr );
 
         void activate() const noexcept;
-        void destroy() const noexcept;
 
         void setFloat( const char * name, float value ) const noexcept;
         void setInt( const char * name, int value ) const noexcept;
