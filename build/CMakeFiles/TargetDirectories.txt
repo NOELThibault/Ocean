@@ -3,6 +3,8 @@
 /home/thibault/Work/Physics/Ocean/build/CMakeFiles/shader.dir
 /home/thibault/Work/Physics/Ocean/build/CMakeFiles/camera.dir
 /home/thibault/Work/Physics/Ocean/build/CMakeFiles/stbi.dir
+/home/thibault/Work/Physics/Ocean/build/CMakeFiles/mesh.dir
+/home/thibault/Work/Physics/Ocean/build/CMakeFiles/model.dir
 /home/thibault/Work/Physics/Ocean/build/CMakeFiles/Ocean.dir
 /home/thibault/Work/Physics/Ocean/build/CMakeFiles/edit_cache.dir
 /home/thibault/Work/Physics/Ocean/build/CMakeFiles/rebuild_cache.dir

@@ -8,12 +8,13 @@
 #include <iostream>
 #include <vector>
 #include <stb_image.h>
+#include <model.hpp>
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 float lastMouseX = 0.0f;
 float lastMouseY = 0.0f;
-Camera cam( glm::vec3( 0.0f, 1.0f, 1.0f ) );
+Camera cam( glm::vec3( 0.0f, 3.0f, 0.0f ) );
 
 void input( GLFWwindow * window )
 {
@@ -98,36 +99,8 @@ int main()
 
     glEnable( GL_DEPTH_TEST );
 
-    // Water surface mesh
-    float waterSurface [] = 
-    {
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        1.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f
-    };
-
-    unsigned int indices [] = 
-    {
-        0, 1, 2,
-        2, 3, 0
-    };
-
-    // Water surface buffers
-    unsigned int waterVAO, waterVBO, waterEBO;
-    glGenVertexArrays( 1, &waterVAO );
-    glGenBuffers( 1, &waterVBO );
-    glGenBuffers( 1, &waterEBO );
-    glBindVertexArray( waterVAO );
-    glBindBuffer( GL_ARRAY_BUFFER, waterVBO );
-    glBufferData( GL_ARRAY_BUFFER, sizeof( waterSurface ), waterSurface, GL_STATIC_DRAW );
-    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, waterEBO );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( indices ), indices, GL_STATIC_DRAW );
-
-    glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof( float ), ( void * ) 0 );
-    glEnableVertexAttribArray( 0 );
-
-    // Load water surface shader
+    // Water surface model
+    Model water( "../include/water.obj" );
     Shader waterShader( "../include/shader/water.vs", "../include/shader/water.fs" );
 
     // Skybox mesh
@@ -224,28 +197,39 @@ int main()
     skyboxShader.activate();
     skyboxShader.setInt( "skybox", 0 );
 
+
+    unsigned long frameCount = 0;
+    float sumFPS = 0.0f;
+    float avgFPS = 0.0f;
     while( !glfwWindowShouldClose( window ) )
     {
         float currentFrame = static_cast<float>( glfwGetTime() );
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+        frameCount++;
+        if( frameCount % 60 == 59 )
+        {
+            std::cout << sumFPS / 60.0f << std::endl;
+            sumFPS = 0.0f;
+        }
+        sumFPS += 1.0f / deltaTime;
+
         input( window );
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-        glm::mat4 model = glm::mat4( 1.0f );
         glm::mat4 view = cam.getViewMat();
         glm::mat4 projection = glm::mat4( 1.0f );
         projection = glm::perspective( glm::radians( cam.getFov() ), (float)W_WIDTH / (float)W_HEIGHT, 0.1f, 100.0f );
-        float angle = -90.0f;
-        model = glm::rotate( model, glm::radians( angle ), glm::vec3( 1.0f, 0.0f, 0.0f ) );
 
         waterShader.activate();
-        waterShader.setMat4( "model", model );
         waterShader.setMat4( "view", view );
         waterShader.setMat4( "projection", projection );
+        waterShader.setInt( "numWaves", 16 );
+        waterShader.setFloat( "time", currentFrame );
+        glm::vec3 camPos = cam.getPosition();
+        waterShader.setVec3( "viewPos", camPos );
 
-        glBindVertexArray( waterVAO );
-        glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
+        water.draw( waterShader );
 
         glDepthFunc( GL_LEQUAL );
         view = glm::mat4( glm::mat3( cam.getViewMat() ) ); // remove translation from the view matrix
@@ -266,9 +250,6 @@ int main()
     glCheckError();
     glDeleteBuffers( 1, &skyboxVBO );
     glDeleteVertexArrays( 1, &skyboxVAO );
-    glDeleteBuffers( 1, &waterEBO );
-    glDeleteBuffers( 1, &waterVBO );
-    glDeleteVertexArrays( 1, &waterVAO );
     glfwDestroyWindow( window );
     glfwTerminate();
     return 0;

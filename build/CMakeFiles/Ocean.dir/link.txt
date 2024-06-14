@@ -1,1 +1,1 @@
-/usr/bin/c++ -rdynamic CMakeFiles/Ocean.dir/src/main.cpp.o -o Ocean  /usr/lib/x86_64-linux-gnu/libGL.so /usr/lib/x86_64-linux-gnu/libglfw.so.3.3 libglad.a libldebug.a libshader.a libcamera.a libstbi.a 
+/usr/bin/c++ -rdynamic CMakeFiles/Ocean.dir/src/main.cpp.o -o Ocean  /usr/lib/x86_64-linux-gnu/libGL.so /usr/lib/x86_64-linux-gnu/libglfw.so.3.3 -lassimp libglad.a libldebug.a libshader.a libcamera.a libstbi.a libmodel.a /usr/lib/x86_64-linux-gnu/libassimp.so.5.2.0 libmesh.a -lz /usr/lib/x86_64-linux-gnu/libdraco.so.4.0.0 -lminizip -Wl,-Bstatic -lrt -Wl,-Bdynamic 

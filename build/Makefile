@@ -182,6 +182,32 @@ stbi/fast:
 .PHONY : stbi/fast
 
 #=============================================================================
+# Target rules for targets named mesh
+
+# Build rule for target.
+mesh: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mesh
+.PHONY : mesh
+
+# fast build rule for target.
+mesh/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mesh.dir/build.make CMakeFiles/mesh.dir/build
+.PHONY : mesh/fast
+
+#=============================================================================
+# Target rules for targets named model
+
+# Build rule for target.
+model: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 model
+.PHONY : model
+
+# fast build rule for target.
+model/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/model.dir/build.make CMakeFiles/model.dir/build
+.PHONY : model/fast
+
+#=============================================================================
 # Target rules for targets named Ocean
 
 # Build rule for target.
@@ -290,6 +316,54 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ocean.dir/build.make CMakeFiles/Ocean.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/mesh.o: src/mesh.cpp.o
+.PHONY : src/mesh.o
+
+# target to build an object file
+src/mesh.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mesh.dir/build.make CMakeFiles/mesh.dir/src/mesh.cpp.o
+.PHONY : src/mesh.cpp.o
+
+src/mesh.i: src/mesh.cpp.i
+.PHONY : src/mesh.i
+
+# target to preprocess a source file
+src/mesh.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mesh.dir/build.make CMakeFiles/mesh.dir/src/mesh.cpp.i
+.PHONY : src/mesh.cpp.i
+
+src/mesh.s: src/mesh.cpp.s
+.PHONY : src/mesh.s
+
+# target to generate assembly for a file
+src/mesh.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mesh.dir/build.make CMakeFiles/mesh.dir/src/mesh.cpp.s
+.PHONY : src/mesh.cpp.s
+
+src/model.o: src/model.cpp.o
+.PHONY : src/model.o
+
+# target to build an object file
+src/model.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/model.dir/build.make CMakeFiles/model.dir/src/model.cpp.o
+.PHONY : src/model.cpp.o
+
+src/model.i: src/model.cpp.i
+.PHONY : src/model.i
+
+# target to preprocess a source file
+src/model.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/model.dir/build.make CMakeFiles/model.dir/src/model.cpp.i
+.PHONY : src/model.cpp.i
+
+src/model.s: src/model.cpp.s
+.PHONY : src/model.s
+
+# target to generate assembly for a file
+src/model.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/model.dir/build.make CMakeFiles/model.dir/src/model.cpp.s
+.PHONY : src/model.cpp.s
+
 src/shader.o: src/shader.cpp.o
 .PHONY : src/shader.o
 
@@ -350,6 +424,8 @@ help:
 	@echo "... camera"
 	@echo "... glad"
 	@echo "... ldebug"
+	@echo "... mesh"
+	@echo "... model"
 	@echo "... shader"
 	@echo "... stbi"
 	@echo "... src/camera.o"
@@ -364,6 +440,12 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/mesh.o"
+	@echo "... src/mesh.i"
+	@echo "... src/mesh.s"
+	@echo "... src/model.o"
+	@echo "... src/model.i"
+	@echo "... src/model.s"
 	@echo "... src/shader.o"
 	@echo "... src/shader.i"
 	@echo "... src/shader.s"

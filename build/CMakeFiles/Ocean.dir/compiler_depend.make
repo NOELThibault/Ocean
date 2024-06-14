@@ -413,8 +413,116 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
   /usr/include/c++/11/bits/stl_vector.h \
   /usr/include/c++/11/bits/stl_bvector.h \
   /usr/include/c++/11/bits/vector.tcc \
-  ../include/stb_image.h
+  ../include/stb_image.h \
+  ../include/model.hpp \
+  /usr/include/assimp/scene.h \
+  /usr/include/assimp/types.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
+  /usr/include/assimp/defs.h \
+  /usr/include/assimp/config.h \
+  /usr/include/assimp/vector2.h \
+  /usr/include/assimp/vector3.h \
+  /usr/include/assimp/color4.h \
+  /usr/include/assimp/matrix3x3.h \
+  /usr/include/assimp/matrix4x4.h \
+  /usr/include/assimp/quaternion.h \
+  /usr/include/c++/11/cstring \
+  /usr/include/assimp/vector2.inl \
+  /usr/include/assimp/vector3.inl \
+  /usr/include/assimp/color4.inl \
+  /usr/include/assimp/matrix3x3.inl \
+  /usr/include/c++/11/algorithm \
+  /usr/include/c++/11/utility \
+  /usr/include/c++/11/bits/stl_relops.h \
+  /usr/include/c++/11/bits/stl_algo.h \
+  /usr/include/c++/11/bits/algorithmfwd.h \
+  /usr/include/c++/11/bits/stl_heap.h \
+  /usr/include/c++/11/bits/stl_tempbuf.h \
+  /usr/include/c++/11/bits/uniform_int_dist.h \
+  /usr/include/c++/11/pstl/glue_algorithm_defs.h \
+  /usr/include/c++/11/functional \
+  /usr/include/c++/11/tuple \
+  /usr/include/c++/11/array \
+  /usr/include/c++/11/bits/uses_allocator.h \
+  /usr/include/c++/11/bits/invoke.h \
+  /usr/include/c++/11/bits/refwrap.h \
+  /usr/include/c++/11/bits/std_function.h \
+  /usr/include/c++/11/unordered_map \
+  /usr/include/c++/11/ext/aligned_buffer.h \
+  /usr/include/c++/11/bits/hashtable.h \
+  /usr/include/c++/11/bits/hashtable_policy.h \
+  /usr/include/c++/11/bits/enable_special_members.h \
+  /usr/include/c++/11/bits/node_handle.h \
+  /usr/include/c++/11/bits/unordered_map.h \
+  /usr/include/c++/11/bits/erase_if.h \
+  /usr/include/c++/11/pstl/execution_defs.h \
+  /usr/include/assimp/matrix4x4.inl \
+  /usr/include/assimp/MathFunctions.h \
+  /usr/include/assimp/quaternion.inl \
+  /usr/include/assimp/texture.h \
+  /usr/include/assimp/Compiler/pushpack1.h \
+  /usr/include/assimp/Compiler/poppack1.h \
+  /usr/include/assimp/mesh.h \
+  /usr/include/assimp/aabb.h \
+  /usr/include/assimp/light.h \
+  /usr/include/assimp/camera.h \
+  /usr/include/assimp/material.h \
+  /usr/include/assimp/material.inl \
+  /usr/include/assimp/anim.h \
+  /usr/include/assimp/metadata.h \
+  ../include/mesh.hpp
 
+
+../include/mesh.hpp:
+
+/usr/include/assimp/metadata.h:
+
+/usr/include/assimp/anim.h:
+
+/usr/include/assimp/camera.h:
+
+/usr/include/assimp/light.h:
+
+/usr/include/assimp/quaternion.inl:
+
+/usr/include/c++/11/bits/hashtable_policy.h:
+
+/usr/include/c++/11/bits/hashtable.h:
+
+/usr/include/c++/11/unordered_map:
+
+/usr/include/c++/11/bits/refwrap.h:
+
+/usr/include/c++/11/bits/invoke.h:
+
+/usr/include/c++/11/bits/uses_allocator.h:
+
+/usr/include/c++/11/tuple:
+
+/usr/include/c++/11/bits/std_function.h:
+
+/usr/include/c++/11/bits/stl_tempbuf.h:
+
+/usr/include/c++/11/bits/stl_algo.h:
+
+/usr/include/c++/11/algorithm:
+
+/usr/include/assimp/matrix3x3.inl:
+
+/usr/include/assimp/color4.inl:
+
+/usr/include/assimp/vector2.inl:
+
+/usr/include/assimp/matrix3x3.h:
+
+/usr/include/assimp/defs.h:
+
+/usr/include/strings.h:
+
+/usr/include/assimp/scene.h:
+
+../include/model.hpp:
 
 /usr/include/c++/11/bits/stl_uninitialized.h:
 
@@ -426,6 +534,10 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/include/c++/11/bits/ostream.tcc:
 
+/usr/include/assimp/aabb.h:
+
+/usr/include/c++/11/bits/enable_special_members.h:
+
 /usr/include/c++/11/bits/basic_ios.tcc:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h:
@@ -436,11 +548,17 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
+/usr/include/c++/11/bits/uniform_int_dist.h:
+
 /usr/include/c++/11/bits/basic_ios.h:
+
+/usr/include/string.h:
 
 /usr/include/c++/11/bits/streambuf.tcc:
 
 /usr/include/c++/11/streambuf:
+
+/usr/include/c++/11/pstl/glue_algorithm_defs.h:
 
 /usr/include/c++/11/stdexcept:
 
@@ -453,6 +571,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/include/c++/11/bits/nested_exception.h:
 
 /usr/include/c++/11/bits/cxxabi_init_exception.h:
+
+/usr/include/assimp/matrix4x4.inl:
 
 /usr/include/c++/11/bits/exception_ptr.h:
 
@@ -467,6 +587,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/include/asm-generic/errno-base.h:
 
 /usr/include/x86_64-linux-gnu/asm/errno.h:
+
+/usr/include/c++/11/functional:
 
 /usr/include/linux/errno.h:
 
@@ -566,6 +688,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 ../include/glm/glm/gtc/constants.hpp:
 
+/usr/include/c++/11/utility:
+
 /usr/include/x86_64-linux-gnu/c++/11/bits/error_constants.h:
 
 /usr/include/c++/11/ios:
@@ -632,7 +756,11 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/f16cintrin.h:
 
+/usr/include/assimp/material.inl:
+
 /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vp2intersectvlintrin.h:
+
+/usr/include/assimp/types.h:
 
 /usr/include/c++/11/exception:
 
@@ -690,6 +818,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/include/c++/11/tr1/ell_integral.tcc:
 
+/usr/include/c++/11/array:
+
 /usr/include/c++/11/tr1/beta_function.tcc:
 
 ../include/glm/glm/mat2x4.hpp:
@@ -722,6 +852,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/include/linux/limits.h:
 
+/usr/include/assimp/Compiler/poppack1.h:
+
 /usr/include/c++/11/bits/specfun.h:
 
 ../include/glm/glm/vec2.hpp:
@@ -740,6 +872,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h:
 
+/usr/include/assimp/mesh.h:
+
 /usr/lib/gcc/x86_64-linux-gnu/11/include/avx5124fmapsintrin.h:
 
 ../include/glm/glm/mat2x3.hpp:
@@ -751,6 +885,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 ../include/glm/glm/detail/func_integer.inl:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/xsaveoptintrin.h:
+
+/usr/include/c++/11/ext/aligned_buffer.h:
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
@@ -766,9 +902,13 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
+/usr/include/c++/11/bits/stl_relops.h:
+
 /usr/include/limits.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
+
+/usr/include/assimp/config.h:
 
 ../include/glm/glm/detail/func_geometric.inl:
 
@@ -802,6 +942,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/include/c++/11/cmath:
 
+/usr/include/c++/11/cstring:
+
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
 ../include/glm/glm/detail/type_mat2x3.inl:
@@ -822,6 +964,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 ../src/main.cpp:
 
+/usr/include/assimp/quaternion.h:
+
 /usr/lib/gcc/x86_64-linux-gnu/11/include/lzcntintrin.h:
 
 ../include/glad/glad.h:
@@ -841,6 +985,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/lib/gcc/x86_64-linux-gnu/11/include/pconfigintrin.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/assimp/vector3.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
 
@@ -871,6 +1017,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/lib/gcc/x86_64-linux-gnu/11/include/fmaintrin.h:
 
 ../include/glm/glm/detail/type_mat2x4.inl:
+
+/usr/include/assimp/Compiler/pushpack1.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/rdseedintrin.h:
 
@@ -928,6 +1076,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/include/c++/11/tr1/bessel_function.tcc:
 
+/usr/include/assimp/color4.h:
+
 /usr/include/c++/11/bits/stl_bvector.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
@@ -962,6 +1112,10 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/pmmintrin.h:
 
+/usr/include/assimp/material.h:
+
+/usr/include/c++/11/bits/node_handle.h:
+
 /usr/include/c++/11/iostream:
 
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
@@ -985,6 +1139,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
 
 ../include/glm/glm/simd/common.h:
+
+/usr/include/c++/11/bits/stl_heap.h:
 
 /usr/include/c++/11/bits/std_abs.h:
 
@@ -1021,6 +1177,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
 ../include/glm/glm/detail/type_vec.hpp:
+
+/usr/include/assimp/MathFunctions.h:
 
 ../include/glm/glm/detail/precision.hpp:
 
@@ -1112,6 +1270,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 ../include/glm/glm/detail/func_common.hpp:
 
+/usr/include/assimp/vector3.inl:
+
 /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512dqintrin.h:
 
 ../include/glm/glm/detail/func_exponential.hpp:
@@ -1162,6 +1322,10 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/xsavecintrin.h:
 
+/usr/include/c++/11/pstl/execution_defs.h:
+
+/usr/include/c++/11/bits/algorithmfwd.h:
+
 /usr/lib/gcc/x86_64-linux-gnu/11/include/xsavesintrin.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
@@ -1170,11 +1334,15 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/xtestintrin.h:
 
+/usr/include/assimp/vector2.h:
+
 /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vlintrin.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/emmintrin.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/hresetintrin.h:
+
+/usr/include/c++/11/bits/unordered_map.h:
 
 ../include/glm/glm/detail/type_vec2.hpp:
 
@@ -1186,11 +1354,15 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/smmintrin.h:
 
+/usr/include/assimp/texture.h:
+
 ../include/glm/glm/detail/func_matrix_simd.inl:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/avx512vldqintrin.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/wmmintrin.h:
+
+/usr/include/c++/11/bits/erase_if.h:
 
 /usr/include/c++/11/bits/ptr_traits.h:
 
@@ -1201,6 +1373,8 @@ CMakeFiles/Ocean.dir/src/main.cpp.o: ../src/main.cpp \
 /usr/include/endian.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/avx2intrin.h:
+
+/usr/include/assimp/matrix4x4.h:
 
 ../include/glm/glm/detail/type_vec4.inl:
 

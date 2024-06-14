@@ -245,8 +245,17 @@ Ocean_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Ocean_SOURCE_DIR:STATIC=/home/thibault/Work/Physics/Ocean
 
+//The directory containing a CMake configuration file for assimp.
+assimp_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/assimp-5.2
+
+//The directory containing a CMake configuration file for draco.
+draco_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/draco
+
 //The directory containing a CMake configuration file for glfw3.
 glfw3_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/glfw3
+
+//Dependencies for the target
+model_LIB_DEPENDS:STATIC=general;mesh;
 
 
 ########################
