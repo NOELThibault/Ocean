@@ -9,9 +9,10 @@ uniform samplerCube reflectionTexture;
 
 out vec4 fragColor;
 
+const float fresnelStrength = 0.4;
 void main()
 {
-    vec3 color = vec3( 0.0, 0.0, 1.0 );
+    vec3 color = vec3( 0.0, 0.15, 1.0 );
     // Ambient
     vec3 ambient = color * 0.1;
     // Diffuse
@@ -24,14 +25,14 @@ void main()
     vec3 viewDir = normalize( viewPos - fs_in.pos );
     vec3 halfwayDir = normalize( lightDir + viewDir );
     float spec = pow( max( dot( fs_in.normal, halfwayDir ), 0.0 ), shininess );
-    vec3 specular = vec3( 0.4 ) * spec;
+    float fresnel = 0.02 + ( 1.0 - 0.02 ) * fresnelStrength * pow( 1.0 - clamp( dot( viewDir, fs_in.normal ), 0.0, 1.0 ), 5.0 );
+    vec3 specular = vec3( 0.4 ) * spec * fresnel;
 
     vec3 reflectColor = texture( reflectionTexture, reflectDir ).rgb;
-    float visibility = texture( reflectionTexture, reflectDir ).a * 0.5;
 
     float gamma = 2.2;
 
-    vec3 rgb = mix( ambient + diffuse + specular, reflectColor, visibility );
+    vec3 rgb = mix( ambient + diffuse + specular, reflectColor, fresnel );
     // fragColor = vec4( vec3( linearizeDepth( gl_FragCoord.z ) / far ), 1.0 );
     fragColor = vec4( pow( rgb, vec3( 1 / gamma ) ), 1.0 );
 }
