@@ -104,7 +104,7 @@ int main()
     glEnable( GL_DEPTH_TEST );
 
     // Water surface model
-    Model water( "../include/water.obj" );
+    Model water( "../include/waterS.obj" );
     Shader waterShader( "../include/shader/water.vs", "../include/shader/water.fs" );
 
     // Skybox mesh
@@ -231,7 +231,7 @@ int main()
         waterShader.activate();
         waterShader.setMat4( "view", view );
         waterShader.setMat4( "projection", projection );
-        waterShader.setInt( "numWaves", 16 );
+        waterShader.setInt( "numWaves", 32 );
         waterShader.setFloat( "time", currentFrame );
         glm::vec3 camPos = cam.getPosition();
         waterShader.setVec3( "viewPos", camPos );
