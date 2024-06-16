@@ -9,6 +9,8 @@ enum CameraMovement
     RIGHT,
     BACKWARD,
     LEFT,
+    UP,
+    DOWN,
     NONE
 };
 

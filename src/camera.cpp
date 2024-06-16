@@ -11,12 +11,15 @@ Camera::Camera( glm::vec3 position, glm::vec3 up, float yaw, float pitch, float 
 void Camera::onKeyboard( CameraMovement direction, float deltaTime ) noexcept
 {
     float velocity = moveSpeed * deltaTime;
+    float ogHeight = position.y;
     switch( direction )
     {
-        case FORWARD : position += front * velocity; break;
-        case RIGHT : position += right * velocity; break;
-        case BACKWARD : position -= front * velocity; break;
-        case LEFT : position -= right * velocity; break;
+        case FORWARD : position += front * velocity; position.y = ogHeight; break;
+        case RIGHT : position += right * velocity; position.y = ogHeight; break;
+        case BACKWARD : position -= front * velocity; position.y = ogHeight; break;
+        case LEFT : position -= right * velocity; position.y = ogHeight; break;
+        case UP : position += up * velocity; break;
+        case DOWN : position -= up * velocity; break;
     }
 }
 

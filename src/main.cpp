@@ -14,7 +14,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 float lastMouseX = 0.0f;
 float lastMouseY = 0.0f;
-Camera cam( glm::vec3( 0.0f, 3.0f, 0.0f ) );
+Camera cam( glm::vec3( 0.0f, 5.0f, 0.0f ) );
 
 void input( GLFWwindow * window )
 {
@@ -30,6 +30,10 @@ void input( GLFWwindow * window )
         direction = BACKWARD;
     if( glfwGetKey( window, GLFW_KEY_A ) == GLFW_PRESS )
         direction = LEFT;
+    if( glfwGetKey( window, GLFW_KEY_SPACE ) == GLFW_PRESS )
+        direction = UP;
+    if( glfwGetKey( window, GLFW_KEY_LEFT_SHIFT ) == GLFW_PRESS )
+        direction = DOWN;
 
     cam.onKeyboard( direction, deltaTime );
 }
