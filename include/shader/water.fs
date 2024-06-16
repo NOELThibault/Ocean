@@ -5,12 +5,13 @@ in VS_OUT {
     vec3 normal;
 } fs_in;
 uniform vec3 viewPos;
+uniform samplerCube reflectionTexture;
 
 out vec4 fragColor;
 
 void main()
 {
-    vec3 color = vec3( 0.0, 0.1, 1.0 );
+    vec3 color = vec3( 0.0, 0.0, 1.0 );
     // Ambient
     vec3 ambient = color * 0.1;
     // Diffuse
@@ -25,7 +26,12 @@ void main()
     float spec = pow( max( dot( fs_in.normal, halfwayDir ), 0.0 ), shininess );
     vec3 specular = vec3( 0.4 ) * spec;
 
+    vec3 reflectColor = texture( reflectionTexture, reflectDir ).rgb;
+    float visibility = texture( reflectionTexture, reflectDir ).a * 0.5;
+
     float gamma = 2.2;
-    // fragColor = vec4( fs_in.normal, 1.0 );
-    fragColor = vec4( pow( ambient + diffuse + specular, vec3( 1 / gamma ) ), 1.0 );
+
+    vec3 rgb = mix( ambient + diffuse + specular, reflectColor, visibility );
+    // fragColor = vec4( vec3( linearizeDepth( gl_FragCoord.z ) / far ), 1.0 );
+    fragColor = vec4( pow( rgb, vec3( 1 / gamma ) ), 1.0 );
 }
