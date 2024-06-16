@@ -24,6 +24,7 @@ mat2x3 wave( vec3 pos )
     vec3 newPos = pos;
     float dx = 0.0;
     float dz = 0.0;
+    vec3 normal = vec3( 0.0, 1.0, 0.0 );
 
     float A = 1.0;
     vec3 k = vec3( 1.0, 0.0, 0.0 );
@@ -31,19 +32,20 @@ mat2x3 wave( vec3 pos )
     float w = 1.0;
     for( int i = 0; i < numWaves; i++ )
     {
-        float d = dot( k, pos );
+        float d = dot( k, newPos );
         float f = A * exp( cos( c * time + w * d ) - 1 );
         float fp = -w * sin( c * time + w * d ) * f;
 
         newPos.y += f;
         dx += k.x * fp;
         dz += k.z * fp;
+        normal += vec3( dx, 1.0, dz );
 
         A *= 0.82;
         k = normalize( vec3( random( float( i ) ), 0.0, 1.0 - random( float( i ) ) ) ) * 0.5;
         w *= 1.18;
     }
-    vec3 normal = normalize( vec3( dx, 1.0, dz ) );
+    normal = normalize( normal );
     return mat2x3( newPos, normal );
 }
 
