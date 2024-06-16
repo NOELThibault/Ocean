@@ -205,6 +205,7 @@ int main()
     unsigned long frameCount = 0;
     float sumFPS = 0.0f;
     float avgFPS = 0.0f;
+    unsigned long countFPS = 0;
     while( !glfwWindowShouldClose( window ) )
     {
         float currentFrame = static_cast<float>( glfwGetTime() );
@@ -214,6 +215,8 @@ int main()
         if( frameCount % 60 == 59 )
         {
             std::cout << sumFPS / 60.0f << std::endl;
+            avgFPS += sumFPS / 60.0f;
+            countFPS++;
             sumFPS = 0.0f;
         }
         sumFPS += 1.0f / deltaTime;
@@ -250,7 +253,7 @@ int main()
         glfwSwapBuffers( window );
         glfwPollEvents();
     }
-
+    std::cout << "Average FPS: " << avgFPS / countFPS << std::endl;
     glCheckError();
     glDeleteBuffers( 1, &skyboxVBO );
     glDeleteVertexArrays( 1, &skyboxVAO );
