@@ -30,6 +30,14 @@ void input( GLFWwindow * window )
         direction = BACKWARD;
     if( glfwGetKey( window, GLFW_KEY_A ) == GLFW_PRESS )
         direction = LEFT;
+    if( glfwGetKey( window, GLFW_KEY_D ) == GLFW_PRESS && glfwGetKey( window, GLFW_KEY_W ) == GLFW_PRESS )
+        direction = FORWARD_RIGHT;
+    if( glfwGetKey( window, GLFW_KEY_D ) == GLFW_PRESS && glfwGetKey( window, GLFW_KEY_S ) == GLFW_PRESS )
+        direction = BACKWARD_RIGHT;
+    if( glfwGetKey( window, GLFW_KEY_A ) == GLFW_PRESS && glfwGetKey( window, GLFW_KEY_S ) == GLFW_PRESS )
+        direction = BACKWARD_LEFT;
+    if( glfwGetKey( window, GLFW_KEY_A ) == GLFW_PRESS && glfwGetKey( window, GLFW_KEY_W ) == GLFW_PRESS )
+        direction = FORWARD_LEFT;
     if( glfwGetKey( window, GLFW_KEY_SPACE ) == GLFW_PRESS )
         direction = UP;
     if( glfwGetKey( window, GLFW_KEY_LEFT_SHIFT ) == GLFW_PRESS )
@@ -201,6 +209,8 @@ int main()
     skyboxShader.activate();
     skyboxShader.setInt( "skybox", 0 );
 
+    unsigned int numWaves = 16;
+
     glm::vec3 fogColor = glm::vec3( 0.5f, 0.5f, 0.5f );
     float fogStart = 20.0f;
     float fogEnd = 100.0f;
@@ -235,7 +245,7 @@ int main()
         waterShader.activate();
         waterShader.setMat4( "view", view );
         waterShader.setMat4( "projection", projection );
-        waterShader.setInt( "numWaves", 32 );
+        waterShader.setInt( "numWaves", numWaves );
         waterShader.setFloat( "time", currentFrame );
         glm::vec3 camPos = cam.getPosition();
         waterShader.setVec3( "viewPos", camPos );

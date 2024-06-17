@@ -11,13 +11,16 @@ Camera::Camera( glm::vec3 position, glm::vec3 up, float yaw, float pitch, float 
 void Camera::onKeyboard( CameraMovement direction, float deltaTime ) noexcept
 {
     float velocity = moveSpeed * deltaTime;
-    float ogHeight = position.y;
     switch( direction )
     {
         case FORWARD : position += glm::cross( upWorld, right ) * velocity; break;
+        case FORWARD_RIGHT : position += glm::normalize( glm::cross( upWorld, right ) + right ) * velocity; break;
         case RIGHT : position += right * velocity; break;
-        case BACKWARD : position -= glm::cross( upWorld, right ) * velocity; position.y = ogHeight; break;
+        case BACKWARD_RIGHT : position += glm::normalize( -glm::cross( upWorld, right ) + right ) * velocity; break;
+        case BACKWARD : position -= glm::cross( upWorld, right ) * velocity; break;
+        case BACKWARD_LEFT : position -= glm::normalize( glm::cross( upWorld, right ) + right ) * velocity; break;
         case LEFT : position -= right * velocity; break;
+        case FORWARD_LEFT : position -= glm::normalize( -glm::cross( upWorld, right ) + right ) * velocity; break;
         case UP : position += upWorld * velocity; break;
         case DOWN : position -= upWorld * velocity; break;
     }
