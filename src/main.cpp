@@ -201,6 +201,10 @@ int main()
     skyboxShader.activate();
     skyboxShader.setInt( "skybox", 0 );
 
+    glm::vec3 fogColor = glm::vec3( 0.5f, 0.5f, 0.5f );
+    float fogStart = 20.0f;
+    float fogEnd = 100.0f;
+    float fogHeight = 0.05;
 
     unsigned long frameCount = 0;
     float sumFPS = 0.0f;
@@ -235,6 +239,9 @@ int main()
         waterShader.setFloat( "time", currentFrame );
         glm::vec3 camPos = cam.getPosition();
         waterShader.setVec3( "viewPos", camPos );
+        waterShader.setVec3( "fogColor", fogColor );
+        waterShader.setFloat( "fogStart", fogStart );
+        waterShader.setFloat( "fogEnd", fogEnd );
 
         water.draw( waterShader );
 
@@ -243,6 +250,8 @@ int main()
         skyboxShader.activate();
         skyboxShader.setMat4( "view", view );
         skyboxShader.setMat4( "projection", projection );
+        skyboxShader.setVec3( "fogColor", fogColor );
+        skyboxShader.setFloat( "fogHeight", fogHeight );
 
         glBindVertexArray( skyboxVAO );
         glActiveTexture( GL_TEXTURE0 );

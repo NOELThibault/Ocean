@@ -6,10 +6,20 @@ in VS_OUT {
 } fs_in;
 uniform vec3 viewPos;
 uniform samplerCube reflectionTexture;
+uniform vec3 fogColor;
+uniform float fogStart;
+uniform float fogEnd;
 
 out vec4 fragColor;
 
 const float fresnelStrength = 0.4;
+
+vec3 fog( vec3 color, float depth )
+{
+    float factor = smoothstep( fogStart, fogEnd, depth );
+    return mix( color, fogColor, factor );
+}
+
 void main()
 {
     vec3 color = vec3( 0.0, 0.15, 1.0 );
@@ -33,6 +43,6 @@ void main()
     float gamma = 2.2;
 
     vec3 rgb = mix( ambient + diffuse + specular, reflectColor, fresnel );
-    // fragColor = vec4( vec3( linearizeDepth( gl_FragCoord.z ) / far ), 1.0 );
+    rgb = fog( rgb, length( viewPos - fs_in.pos ) );
     fragColor = vec4( pow( rgb, vec3( 1 / gamma ) ), 1.0 );
 }
