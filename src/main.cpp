@@ -10,18 +10,34 @@
 #include <stb_image.h>
 #include <model.hpp>
 
+#define FAR_PLANE 100.0f
+#define NEAR_PLANE 0.1f
+
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 float lastMouseX = 0.0f;
 float lastMouseY = 0.0f;
 Camera cam( glm::vec3( 0.0f, 5.0f, 0.0f ) );
 
-void input( GLFWwindow * window )
+unsigned int numWaves = 16;
+float fogStart = 20.0f;
+float fogEnd = 100.0f;
+float fogHeight = 0.05f;
+float gammaCorrection = 2.2f;
+float amplitude = 1.0f;
+float frequency = 1.0f;
+float speed = 1.0f;
+float amplDecay = 0.82f;
+float waveLenIncrease = 1.18f;
+float k = 0.5;
+float ambient = 0.1f;
+float shininess = 64.0f;
+float fresnel = 0.4f;
+
+void move( GLFWwindow * window )
 {
     CameraMovement direction = NONE;
 
-    if( glfwGetKey( window, GLFW_KEY_ESCAPE ) == GLFW_PRESS )
-        glfwSetWindowShouldClose( window, true );
     if( glfwGetKey( window, GLFW_KEY_W ) == GLFW_PRESS )
         direction = FORWARD;
     if( glfwGetKey( window, GLFW_KEY_D ) == GLFW_PRESS )
@@ -44,6 +60,128 @@ void input( GLFWwindow * window )
         direction = DOWN;
 
     cam.onKeyboard( direction, deltaTime );
+}
+
+void keyCallBack( GLFWwindow * window, int key, int scancode, int action, int mods )
+{
+    switch( key )
+    {
+        case GLFW_KEY_ESCAPE:
+            glfwSetWindowShouldClose( window, true );
+            break;
+        case GLFW_KEY_1:
+            if( numWaves > 0 )
+                numWaves--;
+            break;
+        case GLFW_KEY_2:
+            if( numWaves < 64 )
+                numWaves++;
+            break;
+        case GLFW_KEY_0:
+            if( gammaCorrection < 5.0f )
+                gammaCorrection += 0.1f;
+            break;
+        case GLFW_KEY_9:
+            if( gammaCorrection > 0.2f )
+                gammaCorrection -= 0.1f;
+            break;
+        case GLFW_KEY_Z:
+            if( fogStart > NEAR_PLANE + 0.5f )
+                fogStart -= 0.5f;
+            break;
+        case GLFW_KEY_X:
+            if( fogStart < fogEnd )
+                fogStart += 0.5f;
+            break;
+        case GLFW_KEY_E:
+            if( fogEnd < FAR_PLANE - 0.5f )
+                fogEnd += 0.5f;
+            break;
+        case GLFW_KEY_Q:
+            if( fogEnd > fogStart )
+                fogEnd -= 0.5f;
+            break;
+        case GLFW_KEY_C:
+            if( fogHeight > 0.0f )
+                fogHeight -= 0.01f;
+            break;
+        case GLFW_KEY_V:
+            if( fogHeight < 1.0f )
+                fogHeight += 0.01f;
+            break;
+        case GLFW_KEY_UP:
+            if( amplitude < 10.0f )
+                amplitude += 0.1f;
+            break;
+        case GLFW_KEY_DOWN:
+            if( amplitude > 0.1f )
+                amplitude -= 0.1f;
+            break;
+        case GLFW_KEY_LEFT:
+            if( frequency > 0.1f )
+                frequency -= 0.1f;
+            break;
+        case GLFW_KEY_RIGHT:
+            if( frequency < 10.0f )
+                frequency += 0.1f;
+            break;
+        case GLFW_KEY_KP_8:
+            if( amplDecay < 0.98f )
+                amplDecay += 0.01f;
+            break;
+        case GLFW_KEY_KP_5:
+            if( amplDecay > 0.02f )
+                amplDecay -= 0.01f;
+            break;
+        case GLFW_KEY_KP_4:
+            if( waveLenIncrease > 1.02f )
+                waveLenIncrease -= 0.01f;
+            break;
+        case GLFW_KEY_KP_6:
+            if( waveLenIncrease < 2.0f )
+                waveLenIncrease += 0.01f;
+            break;
+        case GLFW_KEY_KP_7:
+            if( k > 0.0f )
+                k -= 0.01f;
+            break;
+        case GLFW_KEY_KP_9:
+            if( k < 1.0f )
+                k += 0.01f;
+            break;
+        case GLFW_KEY_KP_1:
+            if( speed > 0.1f )
+                speed -= 0.1f;
+            break;
+        case GLFW_KEY_KP_3:
+            if( speed < 7.0f )
+                speed += 0.1f;
+            break;
+        case GLFW_KEY_J:
+            if( ambient > 0.0f )
+                ambient -= 0.01f;
+            break;
+        case GLFW_KEY_K:
+            if( ambient < 1.0f )
+                ambient += 0.01f;
+            break;
+        case GLFW_KEY_L:
+            if( shininess < 256.0f )
+                shininess += 1.0f;
+            break;
+        case GLFW_KEY_H:
+            if( shininess > 1.0f )
+                shininess -= 1.0f;
+            break;
+        case GLFW_KEY_F:
+            if( fresnel > 0.0f )
+                fresnel -= 0.01f;
+            break;
+        case GLFW_KEY_G:
+            if( fresnel < 1.0f )
+                fresnel += 0.01f;
+            break;
+    }
 }
 
 void mouseCallBack( GLFWwindow * window , double xPos, double yPos )
@@ -97,6 +235,7 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent( window );
+    glfwSetKeyCallback( window, keyCallBack );
     glfwSetCursorPosCallback( window, mouseCallBack );
     glfwSetScrollCallback( window, scrollCallback );
     glfwSetInputMode( window, GLFW_CURSOR, GLFW_CURSOR_DISABLED ); // Cursor captured by window
@@ -209,12 +348,7 @@ int main()
     skyboxShader.activate();
     skyboxShader.setInt( "skybox", 0 );
 
-    unsigned int numWaves = 16;
-
     glm::vec3 fogColor = glm::vec3( 0.5f, 0.5f, 0.5f );
-    float fogStart = 20.0f;
-    float fogEnd = 100.0f;
-    float fogHeight = 0.05;
 
     unsigned long frameCount = 0;
     float sumFPS = 0.0f;
@@ -235,23 +369,33 @@ int main()
         }
         sumFPS += 1.0f / deltaTime;
 
-        input( window );
+        move( window );
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
         glm::mat4 view = cam.getViewMat();
         glm::mat4 projection = glm::mat4( 1.0f );
-        projection = glm::perspective( glm::radians( cam.getFov() ), (float)W_WIDTH / (float)W_HEIGHT, 0.1f, 100.0f );
+        projection = glm::perspective( glm::radians( cam.getFov() ), (float)W_WIDTH / (float)W_HEIGHT, NEAR_PLANE, FAR_PLANE );
 
         waterShader.activate();
         waterShader.setMat4( "view", view );
         waterShader.setMat4( "projection", projection );
         waterShader.setInt( "numWaves", numWaves );
         waterShader.setFloat( "time", currentFrame );
+        waterShader.setFloat( "amplitude", amplitude );
+        waterShader.setFloat( "frequency", frequency );
+        waterShader.setFloat( "speed", speed );
+        waterShader.setFloat( "ADecay", amplDecay );
+        waterShader.setFloat( "wIncrease", waveLenIncrease );
+        waterShader.setFloat( "kFactor", k );
         glm::vec3 camPos = cam.getPosition();
         waterShader.setVec3( "viewPos", camPos );
         waterShader.setVec3( "fogColor", fogColor );
         waterShader.setFloat( "fogStart", fogStart );
         waterShader.setFloat( "fogEnd", fogEnd );
+        waterShader.setFloat( "gamma", gammaCorrection );
+        waterShader.setFloat( "ambientStrength", ambient );
+        waterShader.setFloat( "shininess", shininess );
+        waterShader.setFloat( "fresnelStrength", fresnel );
 
         water.draw( waterShader );
 
@@ -262,6 +406,7 @@ int main()
         skyboxShader.setMat4( "projection", projection );
         skyboxShader.setVec3( "fogColor", fogColor );
         skyboxShader.setFloat( "fogHeight", fogHeight );
+        skyboxShader.setFloat( "gamma", gammaCorrection );
 
         glBindVertexArray( skyboxVAO );
         glActiveTexture( GL_TEXTURE0 );

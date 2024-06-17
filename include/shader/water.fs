@@ -9,10 +9,12 @@ uniform samplerCube reflectionTexture;
 uniform vec3 fogColor;
 uniform float fogStart;
 uniform float fogEnd;
+uniform float gamma;
+uniform float ambientStrength;
+uniform float shininess;
+uniform float fresnelStrength;
 
 out vec4 fragColor;
-
-const float fresnelStrength = 0.4;
 
 vec3 fog( vec3 color, float depth )
 {
@@ -39,8 +41,6 @@ void main()
     vec3 specular = vec3( 0.4 ) * spec * fresnel;
 
     vec3 reflectColor = texture( reflectionTexture, reflectDir ).rgb;
-
-    float gamma = 2.2;
 
     vec3 rgb = mix( ambient + diffuse + specular, reflectColor, fresnel );
     rgb = fog( rgb, length( viewPos - fs_in.pos ) );

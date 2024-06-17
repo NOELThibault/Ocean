@@ -5,7 +5,12 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform int numWaves;
 uniform float time;
-#define PI 3.14159265359
+uniform float amplitude;
+uniform float speed;
+uniform float frequency;
+uniform float kFactor;
+uniform float ADecay;
+uniform float wIncrease;
 
 out VS_OUT
 {
@@ -26,10 +31,10 @@ mat2x3 wave( vec3 pos )
     float dz = 0.0;
     vec3 normal = vec3( 0.0, 1.0, 0.0 );
 
-    float A = 1.0;
+    float A = amplitude;
+    float c = speed;
+    float w = frequency;
     vec3 k = vec3( 1.0, 0.0, 0.0 );
-    float c = 2.0 * PI / 3.0;
-    float w = 1.0;
     for( int i = 0; i < numWaves; i++ )
     {
         float d = dot( k, newPos );
@@ -41,9 +46,9 @@ mat2x3 wave( vec3 pos )
         dz += k.z * fp;
         normal += vec3( dx, 1.0, dz );
 
-        A *= 0.82;
-        k = normalize( vec3( random( float( i ) ), 0.0, 1.0 - random( float( i ) ) ) ) * 0.5;
-        w *= 1.18;
+        A *= ADecay;
+        k = normalize( vec3( random( float( i ) ), 0.0, 1.0 - random( float( i ) ) ) ) * kFactor; // idk why but it works better with a factor < 1
+        w *= wIncrease;
     }
     normal = normalize( normal );
     return mat2x3( newPos, normal );
