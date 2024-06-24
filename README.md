@@ -2,49 +2,49 @@
  A simulation of an ocean
 
 # Controls
- WASD ( ZQSD for AZERTY ) : Move
- SPACE BAR : Go up
- LEFT SHIFT : Go down
+ WASD ( ZQSD for AZERTY ) : Move <br>
+ SPACE BAR : Go up<br>
+ LEFT SHIFT : Go down<br>
 
- MOUSE : Look around
- MOUSE WHEEL : Zoom
+ MOUSE : Look around<br>
+ MOUSE WHEEL : Zoom<br>
 
- UP ARROW : Increase wave amplitude
- DOWN ARROW : Decrease wave amplitude
+ UP ARROW : Increase wave amplitude<br>
+ DOWN ARROW : Decrease wave amplitude<br>
 
- RIGHT ARROW : Increase wave frequency
- LEFT ARROW : Decrease wave frequency
+ RIGHT ARROW : Increase wave frequency<br>
+ LEFT ARROW : Decrease wave frequency<br>
 
- NUM PAD 8 : Increase amplitude decay
- NUM PAD 5 : Decrease amplitude decay
+ NUM PAD 8 : Increase amplitude decay<br>
+ NUM PAD 5 : Decrease amplitude decay<br>
 
- NUM PAD 6 : Increase frequency increase
- NUM PAD 4 : Decrease frequency increase
+ NUM PAD 6 : Increase frequency increase<br>
+ NUM PAD 4 : Decrease frequency increase<br>
 
- NUM PAD 3 : Increase wave speed
- NUM PAD 1 : Decrease wave speed
+ NUM PAD 3 : Increase wave speed<br>
+ NUM PAD 1 : Decrease wave speed<br>
 
- NUM PAD 9 : Increase wave direction factor
- NUM PAD 7 : Decrease wave direction factor
+ NUM PAD 9 : Increase wave direction factor<br>
+ NUM PAD 7 : Decrease wave direction factor<br>
  
- K : Increase ambient lighting strength
- J : Decrease ambient lighting strength
+ K : Increase ambient lighting strength<br>
+ J : Decrease ambient lighting strength<br>
 
- L : Increase water shininess
- H : Decrease water shininess
+ L : Increase water shininess<br>
+ H : Decrease water shininess<br>
 
- G : Increase fresnel effect strength
- F : Decrease fresnel effect strength
+ G : Increase fresnel effect strength<br>
+ F : Decrease fresnel effect strength<br>
 
- 2 : Increase number of waves
- 1 : Decrease number of waves
+ 2 : Increase number of waves<br>
+ 1 : Decrease number of waves<br>
 
- E : Increase end of fog distance
- Q ( A for AZERTY ) : Decrease end of fog distance
- X : Increase start of fog distance
- Z ( W for AZERTY ) : Decrease start of fog distance
- V : Increase fog height
- C : Decrease fog height
+ E : Increase end of fog distance<br>
+ Q ( A for AZERTY ) : Decrease end of fog distance<br>
+ X : Increase start of fog distance<br>
+ Z ( W for AZERTY ) : Decrease start of fog distance<br>
+ V : Increase fog height<br>
+ C : Decrease fog height<br>
 
- 0 : Increase gamma correction
+ 0 : Increase gamma correction<br>
  9 : Decrease gamma correction
