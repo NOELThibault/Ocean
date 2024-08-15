@@ -2,10 +2,14 @@ cmake_minimum_required(VERSION 3.0)
 
 project(Ocean)
 
+set(FREETYPE_INCLUDE_DIRS /usr/include/freetype2)
+set(FREETYPE_LIBRARY_DIR /usr/lib/x86_64-linux-gnu)
+
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/include/glm)
 include_directories(${PROJECT_SOURCE_DIR}/include/shader)
 include_directories(${ASSIMP_INCLUDE_DIRS})
+include_directories(${FREETYPE_INCLUDE_DIRS})
 
 add_library(glad src/glad.c)
 add_library(ldebug src/debug.cpp)
@@ -20,7 +24,8 @@ target_link_libraries(model PRIVATE mesh)
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(assimp REQUIRED)
+find_package(Freetype REQUIRED)
 
 add_executable(Ocean src/main.cpp)
 
-target_link_libraries(Ocean PRIVATE OpenGL::GL glfw assimp glad ldebug shader camera stbi model ${ASSIMP_LIBRARIES})
+target_link_libraries(Ocean PRIVATE OpenGL::GL glfw assimp glad ldebug shader camera stbi model ${ASSIMP_LIBRARIES} ${FREETYPE_LIBRARIES})
