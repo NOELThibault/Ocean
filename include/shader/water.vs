@@ -47,7 +47,9 @@ mat2x3 wave( vec3 pos )
         normal += vec3( dx, 1.0, dz );
 
         A *= ADecay;
-        k = normalize( vec3( random( float( i ) ), 0.0, 1.0 - random( float( i ) ) ) ) * kFactor; // idk why but it works better with a factor < 1
+        k = normalize( vec3( random( float( i ) ), 0.0, 1.0 - random( float( i ) ) ) ) * kFactor;
+        // kFactor is how much the wave direction changes between each wave in [0, 1]
+        // I don't know weither or not this is physically accurate or has any real-world equivalent but it looks good
         w *= wIncrease;
     }
     normal = normalize( normal );
