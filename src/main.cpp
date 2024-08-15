@@ -416,7 +416,7 @@ int main()
     glCheckError();
 
     // Water surface model
-    Model water( "../include/waterS.obj" );
+    Model water( "../include/water.obj" );
     Shader waterShader( "../include/shader/water.vs", "../include/shader/water.fs" );
 
     // Skybox mesh
