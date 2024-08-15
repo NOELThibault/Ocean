@@ -102,6 +102,11 @@ void Shader::setBool( const char * name, bool value ) const noexcept
     glUniform1i( glGetUniformLocation( id, name ), (int)value );
 }
 
+void Shader::setIntArray( const char * name, int * value, unsigned int count ) const noexcept
+{
+    glUniform1iv( glGetUniformLocation( id, name ), count, value );
+}
+
 void Shader::setVec2( const char * name, float x, float y ) const noexcept
 {
     glUniform2f( glGetUniformLocation( id, name ), x, y );
@@ -145,6 +150,11 @@ void Shader::setMat3( const char * name, glm::mat3 & m ) const noexcept
 void Shader::setMat4( const char * name, glm::mat4 & m ) const noexcept
 {
     glUniformMatrix4fv( glGetUniformLocation( id, name ), 1, GL_FALSE, &m[0][0] );
+}
+
+void Shader::setMat4Array( const char * name, glm::mat4 * m, unsigned int count ) const noexcept
+{
+    glUniformMatrix4fv( glGetUniformLocation( id, name ), count, GL_FALSE, &m[0][0][0] );
 }
 
 void Shader::compileErrors( unsigned int shader, const char * type )

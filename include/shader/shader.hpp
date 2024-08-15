@@ -14,6 +14,7 @@ class Shader
         void setFloat( const char * name, float value ) const noexcept;
         void setInt( const char * name, int value ) const noexcept;
         void setBool( const char * name, bool value ) const noexcept;
+        void setIntArray( const char * name, int * value, unsigned int count ) const noexcept;
 
         void setVec2( const char * name, float x, float y ) const noexcept;
         void setVec3( const char * name, float x, float y, float z ) const noexcept;
@@ -26,6 +27,7 @@ class Shader
         void setMat2( const char * name, glm::mat2 & m ) const noexcept;
         void setMat3( const char * name, glm::mat3 & m ) const noexcept;
         void setMat4( const char * name, glm::mat4 & m ) const noexcept;
+        void setMat4Array( const char * name, glm::mat4 * m , unsigned int count ) const noexcept;
 
     private :
         unsigned int id;
