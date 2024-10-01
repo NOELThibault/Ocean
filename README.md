@@ -1,5 +1,13 @@
 # Ocean
- A simulation of an ocean
+ A simulation of an ocean with modifiable parameters
+
+# Depedencies
+ In order to run the simulation, you need : <br>
+ Support for OpenGL 3.3 or higher <br>
+ CMake 3.0 or higher <br>
+ GLFW 3.3 or higher <br>
+ Assimp 3.1.1 or higher <br>
+ Freetype 2.13 or higher <br>
 
 # Controls
  WASD ( ZQSD for AZERTY ) : Move <br>
