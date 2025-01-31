@@ -1,5 +1,8 @@
 # Ocean
- A simulation of an ocean with modifiable parameters
+ A simulation of an ocean using a sum of waves with modifiable parameters.
+ 
+## Screenshot
+ <img src = "ocean.png" alt = "Screenshot from the simulation">
 
 # Depedencies
  In order to run the simulation, you need : <br>
