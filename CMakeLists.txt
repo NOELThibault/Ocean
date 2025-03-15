@@ -1,16 +1,18 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.15)
+project(Ocean LANGUAGES C CXX)
 
-project(Ocean)
+# Set C++ standard and policies
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-set(FREETYPE_INCLUDE_DIRS /usr/include/freetype2)
-set(FREETYPE_LIBRARY_DIR /usr/lib/x86_64-linux-gnu)
+# Find dependencies using modern CMake
+find_package(OpenGL REQUIRED)
+find_package(glfw3 3.3 REQUIRED)
+find_package(assimp REQUIRED)
+find_package(Freetype REQUIRED)
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${PROJECT_SOURCE_DIR}/include/glm)
-include_directories(${PROJECT_SOURCE_DIR}/include/shader)
-include_directories(${ASSIMP_INCLUDE_DIRS})
-include_directories(${FREETYPE_INCLUDE_DIRS})
-
+# Create library targets first
 add_library(glad src/glad.c)
 add_library(ldebug src/debug.cpp)
 add_library(shader src/shader.cpp)
@@ -19,13 +21,34 @@ add_library(stbi src/stb_image.cpp)
 add_library(mesh src/mesh.cpp)
 add_library(model src/model.cpp)
 
-target_link_libraries(model PRIVATE mesh)
-
-find_package(OpenGL REQUIRED)
-find_package(glfw3 REQUIRED)
-find_package(assimp REQUIRED)
-find_package(Freetype REQUIRED)
-
+# Main executable
 add_executable(Ocean src/main.cpp)
 
-target_link_libraries(Ocean PRIVATE OpenGL::GL glfw assimp glad ldebug shader camera stbi model ${ASSIMP_LIBRARIES} ${FREETYPE_LIBRARIES})
+# Set common include directories for all targets
+foreach(target IN ITEMS glad ldebug shader camera stbi mesh model Ocean)
+    target_include_directories(${target} PUBLIC
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/include/glm
+        ${PROJECT_SOURCE_DIR}/include/shader
+    )    
+endforeach()    
+
+# Link dependencies for specific targets
+target_link_libraries(model PRIVATE mesh assimp::assimp)
+
+# Special handling for glad (C library)
+target_include_directories(glad PRIVATE ${OPENGL_INCLUDE_DIR})
+
+# Link all components to main executable
+target_link_libraries(Ocean PRIVATE
+    OpenGL::GL
+    glfw
+    assimp::assimp
+    glad
+    ldebug
+    shader
+    camera
+    stbi
+    model
+    Freetype::Freetype
+)
