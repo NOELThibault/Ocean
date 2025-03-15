@@ -9,9 +9,7 @@
 #include <vector>
 #include <stb_image.h>
 #include <model.hpp>
-#include <map>
-#include <ft2build.h>
-#include FT_FREETYPE_H
+#include <hud.hpp>
 
 #define FAR_PLANE 100.0f
 #define NEAR_PLANE 0.1f
@@ -37,138 +35,7 @@ float ambient = 0.1f;
 float shininess = 64.0f;
 float fresnel = 0.4f;
 
-struct Character
-{
-    int characterId;
-    glm::ivec2 size;
-    glm::ivec2 bearing;
-    unsigned int xAdvance;
-};
-float textVertices [] = {
-    0.0f, 1.0f,
-    0.0f, 0.0f,
-    1.0f, 1.0f,
-    1.0f, 0.0f
-};
-
-std::map< char, Character > characters;
-unsigned int textArray;
-glm::mat4 textTransforms[ 200 ];
-int letterMap[ 200 ];
-unsigned int textVAO, textVBO;
-
-int loadFont( FT_Library ft, FT_Face face )
-{
-    FT_Set_Pixel_Sizes( face, 256, 256 );
-    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-
-    glGenTextures( 1, &textArray );
-    glActiveTexture( GL_TEXTURE0 );
-    glBindTexture( GL_TEXTURE_2D_ARRAY, textArray );
-    glCheckError();
-    glTexImage3D( GL_TEXTURE_2D_ARRAY, 0, GL_R8, 256, 256, 128, 0, GL_RED, GL_UNSIGNED_BYTE, 0 );
-
-    for( unsigned char c = 0; c < 128; c++ )
-    {
-        if( FT_Load_Char( face, c, FT_LOAD_RENDER ) )
-        {
-            std::cerr << "Failed to load Glyph" << std::endl;
-            return -1;
-        }
-        // Load the texture
-        glTexSubImage3D( GL_TEXTURE_2D_ARRAY, 0, 0, 0, int( c ), face->glyph->bitmap.width, face->glyph->bitmap.rows, 1, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer );
-        glTexImage2D( GL_TEXTURE_2D, 0, GL_RED, face->glyph->bitmap.width, face->glyph->bitmap.rows, 0, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer );
-        glTexParameteri( GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-        glTexParameteri( GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-        glTexParameteri( GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-        glTexParameteri( GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-
-        Character character = {
-            int( c ),
-            glm::ivec2( face->glyph->bitmap.width, face->glyph->bitmap.rows ),
-            glm::ivec2( face->glyph->bitmap_left, face->glyph->bitmap_top ),
-            static_cast<unsigned int>( face->glyph->advance.x )
-        };
-        characters.insert( std::pair< char, Character >( c, character ) );
-    }
-    glCheckError();
-
-    glBindTexture( GL_TEXTURE_2D_ARRAY, 0 );
-
-    FT_Done_Face( face );
-    FT_Done_FreeType( ft );
-
-    for( int i = 0; i < 200; i++ )
-    {
-        textTransforms[i] = glm::mat4( 1.0f );
-        letterMap[i] = 0;
-    }
-    // Set up buffers
-    glCheckError();
-    glGenVertexArrays( 1, &textVAO );
-    glGenBuffers( 1, &textVBO );
-    glBindVertexArray( textVAO );
-    glBindBuffer( GL_ARRAY_BUFFER, textVBO );
-    glBufferData( GL_ARRAY_BUFFER, sizeof( textVertices ), textVertices, GL_STATIC_DRAW );
-    glEnableVertexAttribArray( 0 );
-    glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, 0, 0 );
-    glBindBuffer( GL_ARRAY_BUFFER, 0 );
-    glBindVertexArray( 0 );
-    return 0;
-}
-
-void renderText( const std::string & text, Shader & shader, float x, float y, float scale, glm::vec3 & color )
-{
-    glDisable( GL_DEPTH_TEST );
-    float ogX = x;
-    shader.activate();
-    shader.setVec3( "textColor", color );
-
-    glActiveTexture( GL_TEXTURE0 );
-    glBindTexture( GL_TEXTURE_2D_ARRAY, textArray );
-    glBindVertexArray( textVAO );
-    glBindBuffer( GL_ARRAY_BUFFER, textVBO );
-
-    int currentIndex = 0;
-    std::string::const_iterator c;
-    for( c = text.begin(); c != text.end(); c++ )
-    {
-        Character ch = characters[ *c ];
-        switch( *c )
-        {
-            case '\n':
-                y -= ch.size.y * 1.5f * scale;
-                x = ogX;
-                break;
-            case ' ':
-                x += ( ch.xAdvance >> 6 ) * scale;
-                break;
-            case '\t':
-                x += 4 * ( ch.xAdvance >> 6 ) * scale;
-                break;
-            default:
-                float xpos = x + ch.bearing.x * scale;
-                float ypos = y - ( 256 - ch.bearing.y ) * scale;
-                float w = ch.size.x * scale;
-                float h = ch.size.y * scale;
-
-                textTransforms[ currentIndex ] = glm::translate( glm::mat4( 1.0f ), glm::vec3( xpos, ypos, 0.0f ) ) * glm::scale( glm::mat4( 1.0f ), glm::vec3( 256.0f * scale, 256.0f * scale, 0.0f ) );
-                letterMap[ currentIndex ] = ch.characterId;
-
-                x += ( ch.xAdvance >> 6 ) * scale;
-                
-                currentIndex++;
-                break;
-        }
-    }
-    shader.setMat4Array( "transforms", textTransforms, currentIndex );
-    shader.setIntArray( "letterMap", letterMap, currentIndex );
-    glDrawArraysInstanced( GL_TRIANGLE_STRIP, 0, 4, currentIndex );
-    glBindBuffer( GL_ARRAY_BUFFER, 0 );
-    glBindVertexArray( 0 );
-    glBindTexture( GL_TEXTURE_2D_ARRAY, 0 );
-    glEnable( GL_DEPTH_TEST );
-}
+bool displayHUD = true;
 
 void move( GLFWwindow * window )
 {
@@ -384,36 +251,22 @@ int main()
         return -1;
     }
 
+    HUD hud;
+
+    try
+    {
+        hud = { W_WIDTH, W_HEIGHT, "../include/font/arial.ttf" };
+    }
+    catch( std::exception & e )
+    {
+        std::cerr << e.what() << std::endl;
+        displayHUD = false;
+    }
+
     glEnable( GL_DEPTH_TEST );
     glEnable( GL_CULL_FACE );
     glEnable( GL_BLEND );
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-
-    // Load text shader
-    Shader textShader( "../include/shader/text.vs", "../include/shader/text.fs" );
-    glm::mat4 screenProjection = glm::ortho( 0.0f, static_cast< float >( W_WIDTH ), 0.0f, static_cast< float >( W_HEIGHT ) );
-    textShader.activate();
-    textShader.setMat4( "projection", screenProjection );
-
-    // Initialize text rendering
-    FT_Library ft;
-    if( FT_Init_FreeType( &ft ) )
-    {
-        std::cerr << "Failed to initialize FreeType" << std::endl;
-        return -1;
-    }
-    FT_Face face;
-    if( FT_New_Face( ft, "../include/font/arial.ttf", 0, &face ) )
-    {
-        std::cerr << "Failed to load font" << std::endl;
-        return -1;
-    }
-    if( loadFont( ft, face ) == -1 )
-    {
-        std::cerr << "Failed to load font" << std::endl;
-        return -1;
-    }
-    glCheckError();
 
     // Water surface model
     Model water( "../include/water.obj" );
@@ -515,7 +368,7 @@ int main()
 
     glm::vec3 fogColor = glm::vec3( 0.5f, 0.5f, 0.5f );
 
-    glm::vec3 textColor = glm::vec3( 1.0f, 1.0f, 0.0f );
+    glm::vec4 textColor = glm::vec4( 1.0f, 1.0f, 0.0f, 1.0f );
 
     unsigned long frameCount = 0;
     float sumFPS = 0.0f;
@@ -580,12 +433,15 @@ int main()
         glDrawArrays( GL_TRIANGLES, 0, 36 );
         glDepthFunc( GL_LESS );
 
-        renderText( "Number of waves : " + std::to_string( numWaves ) + "\nAmplitude : " + std::to_string( amplitude ) + "\nFrequency : " + std::to_string( frequency ) + "\nSpeed : " + std::to_string( speed ) + "\nAmplitude Decay : " + std::to_string( amplDecay ) + "\nWave Length Increase : " + std::to_string( waveLenIncrease ) + "\nK Factor : " + std::to_string( k ),
-                    textShader, W_WIDTH * 0.01f, W_HEIGHT * 0.9f, 0.08f, textColor );
-        renderText( "Ambient Strength : " + std::to_string( ambient ) + "\nShininess : " + std::to_string( shininess ) + "\nFresnel Strength : " + std::to_string( fresnel ) + "\nGamma Correction : " + std::to_string( gammaCorrection ) + "\nFog Start : " + std::to_string( fogStart ) + "\nFog End : " + std::to_string( fogEnd ) + "\nFog Height : " + std::to_string( fogHeight ),
-                    textShader, W_WIDTH * 0.85f, W_HEIGHT * 0.9f, 0.08f, textColor );
-        renderText( "FPS : " + std::to_string( (int)avgFPS / countFPS ), textShader, W_WIDTH * 0.9f, W_HEIGHT * 0.01f, 0.08f, textColor );
-        renderText( "Current position : " + std::to_string( camPos.x ) + " " + std::to_string( camPos.y ) + " " + std::to_string( camPos.z ), textShader, W_WIDTH * 0.01f, W_HEIGHT * 0.01f, 0.08f, textColor );
+        if( displayHUD )
+        {
+            hud.renderText( "Number of waves : " + std::to_string( numWaves ) + "\nAmplitude : " + std::to_string( amplitude ) + "\nFrequency : " + std::to_string( frequency ) + "\nSpeed : " + std::to_string( speed ) + "\nAmplitude Decay : " + std::to_string( amplDecay ) + "\nWave Length Increase : " + std::to_string( waveLenIncrease ) + "\nK Factor : " + std::to_string( k ),
+                            W_WIDTH * 0.01f, W_HEIGHT * 0.9f, 0.08f, textColor );
+            hud.renderText( "Ambient Strength : " + std::to_string( ambient ) + "\nShininess : " + std::to_string( shininess ) + "\nFresnel Strength : " + std::to_string( fresnel ) + "\nGamma Correction : " + std::to_string( gammaCorrection ) + "\nFog Start : " + std::to_string( fogStart ) + "\nFog End : " + std::to_string( fogEnd ) + "\nFog Height : " + std::to_string( fogHeight ),
+                            W_WIDTH * 0.85f, W_HEIGHT * 0.9f, 0.08f, textColor );
+            hud.renderText( "FPS : " + std::to_string( (int)avgFPS / countFPS ), W_WIDTH * 0.9f, W_HEIGHT * 0.01f, 0.08f, textColor );
+            hud.renderText( "Current position : " + std::to_string( camPos.x ) + " " + std::to_string( camPos.y ) + " " + std::to_string( camPos.z ), W_WIDTH * 0.01f, W_HEIGHT * 0.01f, 0.08f, textColor );
+        }
 
         glfwSwapBuffers( window );
         glfwPollEvents();

@@ -20,12 +20,13 @@ add_library(camera src/camera.cpp)
 add_library(stbi src/stb_image.cpp)
 add_library(mesh src/mesh.cpp)
 add_library(model src/model.cpp)
+add_library(hud src/hud.cpp)
 
 # Main executable
 add_executable(Ocean src/main.cpp)
 
 # Set common include directories for all targets
-foreach(target IN ITEMS glad ldebug shader camera stbi mesh model Ocean)
+foreach(target IN ITEMS glad ldebug shader camera stbi mesh model hud Ocean)
     target_include_directories(${target} PUBLIC
         ${PROJECT_SOURCE_DIR}/include
         ${PROJECT_SOURCE_DIR}/include/glm
@@ -34,6 +35,7 @@ foreach(target IN ITEMS glad ldebug shader camera stbi mesh model Ocean)
 endforeach()    
 
 # Link dependencies for specific targets
+target_link_libraries(hud PRIVATE Freetype::Freetype)
 target_link_libraries(model PRIVATE mesh assimp::assimp)
 
 # Special handling for glad (C library)
@@ -50,5 +52,6 @@ target_link_libraries(Ocean PRIVATE
     camera
     stbi
     model
+    hud
     Freetype::Freetype
 )
