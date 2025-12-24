@@ -1,10 +1,12 @@
 # Ocean
- A simulation of an ocean using a sum of waves with modifiable parameters.
+ A simulation of an ocean with modifiable parameters made during my first year of college. Some parts of the code are sketchy and need refactoring.
+
+As for now, it only uses the sum of wave technique with keyboard inputs for changing parameters. An extension with an actual GUI and using the FFT is planned for the future.
  
 ## Screenshot
  <img src = "ocean.png" alt = "Screenshot from the simulation">
 
-# Depedencies
+## Depedencies
  In order to run the simulation, you need : <br>
  Support for OpenGL 3.3 or higher <br>
  CMake 3.15 or higher <br>
@@ -12,7 +14,7 @@
  Assimp 3.1.1 or higher <br>
  Freetype 2.13 or higher <br>
 
-# Controls
+## Controls
  WASD ( ZQSD for AZERTY ) : Move <br>
  SPACE BAR : Go up<br>
  LEFT SHIFT : Go down<br>
